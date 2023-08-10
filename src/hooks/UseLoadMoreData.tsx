@@ -25,7 +25,7 @@ const useLoadMoreData = () => {
         .then(({data}: {data: ResponseType}) => {
           setPokemonList(prevState => {
             return {
-              ...prevState,
+              ...data,
               results: [...prevState.results, ...data.results],
             };
           });
