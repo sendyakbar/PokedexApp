@@ -1,7 +1,7 @@
 import {useCallback, useState} from 'react';
 import {useRecoilValue} from 'recoil';
 
-import {ResponseType, ResultItem} from './UseFetchData';
+import {ResponseType, ResultItem} from './UseSetGlobalPokemonList';
 import {pokemonListState} from '../recoil/atoms';
 
 const useSearchPokemon = () => {

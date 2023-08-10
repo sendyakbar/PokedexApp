@@ -12,7 +12,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {ItemType} from './PokemonListScreen';
 import PokemonCardComponent from '../components/PokemonCardComponent';
 import useSearchPokemon from '../hooks/UseSearchPokemon';
-import {ResultItem} from '../hooks/UseFetchData';
+import {ResultItem} from '../hooks/UseSetGlobalPokemonList';
 import Input from '../base/Input';
 import {RootStackParamList} from '../navigation/RootNavigator';
 

@@ -3,7 +3,7 @@ import axios from 'axios';
 import {useSetRecoilState} from 'recoil';
 
 import {pokemonListState} from '../recoil/atoms';
-import {ResponseType} from './UseFetchData';
+import {ResponseType} from './UseSetGlobalPokemonList';
 
 type StateType = {
   isNextLoading: boolean;

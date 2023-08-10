@@ -12,7 +12,9 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import PokemonCardComponent from '../components/PokemonCardComponent';
-import useFetchData, {ResultItem} from '../hooks/UseFetchData';
+import useSetGlobalPokemonList, {
+  ResultItem,
+} from '../hooks/UseSetGlobalPokemonList';
 import useLoadMoreData from '../hooks/UseLoadMoreData';
 import {RootStackParamList} from '../navigation/RootNavigator';
 
@@ -23,7 +25,8 @@ export type ItemType = {
 type Props = NativeStackScreenProps<RootStackParamList, 'PokemonListScreen'>;
 
 export default function PokemonListScreen({navigation}: Props): JSX.Element {
-  const {isLoading, response, error} = useFetchData('/pokemon?limit=8');
+  const {isLoading, response, error} =
+    useSetGlobalPokemonList('/pokemon?limit=8');
   const {loadMore, isNextLoading} = useLoadMoreData();
 
   const onPressSearch = useCallback(() => {

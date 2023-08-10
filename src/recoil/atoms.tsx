@@ -1,5 +1,5 @@
 import {atom} from 'recoil';
-import {ResponseType} from '../hooks/UseFetchData';
+import {ResponseType} from '../hooks/UseSetGlobalPokemonList';
 
 export const pokemonListState = atom<ResponseType>({
   key: 'pokemonListState',
