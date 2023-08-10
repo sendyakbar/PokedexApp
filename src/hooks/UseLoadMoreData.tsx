@@ -1,6 +1,6 @@
 import {useState, useCallback} from 'react';
 import axios from 'axios';
-import {useRecoilState} from 'recoil';
+import {useSetRecoilState} from 'recoil';
 
 import {pokemonListState} from '../recoil/atoms';
 import {ResponseType} from './UseFetchData';
@@ -11,7 +11,7 @@ type StateType = {
 };
 
 const useLoadMoreData = () => {
-  const [, setPokemonList] = useRecoilState<ResponseType>(pokemonListState);
+  const setPokemonList = useSetRecoilState<ResponseType>(pokemonListState);
   const [state, setState] = useState<StateType>({
     isNextLoading: false,
     error: '',
