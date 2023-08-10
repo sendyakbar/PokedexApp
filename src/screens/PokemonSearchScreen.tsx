@@ -7,16 +7,29 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {ItemType} from './PokemonListScreen';
 import PokemonCardComponent from '../components/PokemonCardComponent';
 import useSearchPokemon from '../hooks/UseSearchPokemon';
+import {ResultItem} from '../hooks/UseFetchData';
 import Input from '../base/Input';
+import {RootStackParamList} from '../navigation/RootNavigator';
 
-export default function PokemonSearchScreen(): JSX.Element {
+type Props = NativeStackScreenProps<RootStackParamList, 'PokemonSearchScreen'>;
+
+export default function PokemonSearchScreen({navigation}: Props): JSX.Element {
   const {filteredList, searchPokemon} = useSearchPokemon();
 
-  const onPressItem = useCallback(() => {}, []);
+  const onPressItem = useCallback(
+    (item: ResultItem) => () => {
+      navigation.navigate('PokemonDetailScreen', {
+        url: item.url,
+        name: item.name,
+      });
+    },
+    [navigation],
+  );
 
   const onSearch = useCallback(
     (input: string) => {
@@ -27,7 +40,7 @@ export default function PokemonSearchScreen(): JSX.Element {
 
   const renderItem = useCallback(
     ({item}: ItemType) => {
-      return <PokemonCardComponent data={item} onPress={onPressItem} />;
+      return <PokemonCardComponent data={item} onPress={onPressItem(item)} />;
     },
     [onPressItem],
   );

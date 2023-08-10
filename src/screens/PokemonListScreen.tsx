@@ -30,7 +30,15 @@ export default function PokemonListScreen({navigation}: Props): JSX.Element {
     navigation.navigate('PokemonSearchScreen');
   }, [navigation]);
 
-  const onPressItem = useCallback(() => {}, []);
+  const onPressItem = useCallback(
+    (item: ResultItem) => () => {
+      navigation.navigate('PokemonDetailScreen', {
+        url: item.url,
+        name: item.name,
+      });
+    },
+    [navigation],
+  );
 
   const onEndReached = useCallback(() => {
     loadMore(response.next || '');
@@ -63,7 +71,7 @@ export default function PokemonListScreen({navigation}: Props): JSX.Element {
 
   const renderItem = useCallback(
     ({item}: ItemType) => {
-      return <PokemonCardComponent data={item} onPress={onPressItem} />;
+      return <PokemonCardComponent data={item} onPress={onPressItem(item)} />;
     },
     [onPressItem],
   );
