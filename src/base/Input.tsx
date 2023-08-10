@@ -17,6 +17,7 @@ export default function Input(props: Props): JSX.Element {
         onChangeText={onChangeText}
         value={value}
         style={styles.textInput}
+        autoCapitalize="none"
       />
     </View>
   );
