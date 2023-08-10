@@ -1,5 +1,8 @@
-import {useState, useEffect, useCallback} from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios';
+import {useRecoilState} from 'recoil';
+
+import {pokemonListState} from '../recoil/atoms';
 
 axios.defaults.baseURL = 'https://pokeapi.co/api/v2';
 
@@ -8,7 +11,7 @@ export type ResultItem = {
   url: string;
 };
 
-type ResponseType = {
+export type ResponseType = {
   count: number;
   next: string | null;
   previous: string | null;
@@ -17,21 +20,14 @@ type ResponseType = {
 
 type StateType = {
   isLoading: boolean;
-  isNextLoading: boolean;
-  response: ResponseType;
   error: string;
 };
 
 const useFetchData = (url: string) => {
+  const [pokemonList, setPokemonList] =
+    useRecoilState<ResponseType>(pokemonListState);
   const [state, setState] = useState<StateType>({
     isLoading: true,
-    isNextLoading: false,
-    response: {
-      count: 0,
-      next: null,
-      previous: null,
-      results: [],
-    },
     error: '',
   });
 
@@ -40,7 +36,7 @@ const useFetchData = (url: string) => {
       axios
         .get(url)
         .then(({data}) => {
-          setState(prevState => ({...prevState, response: data}));
+          setPokemonList(data);
         })
         .catch(err => {
           setState(prevState => ({...prevState, error: err}));
@@ -50,37 +46,12 @@ const useFetchData = (url: string) => {
         });
     }
     fetchData();
-  }, [url]);
-
-  const loadMore = useCallback((nextUrl: string) => {
-    setState(prevState => ({...prevState, isNextLoading: true}));
-    axios
-      .get(nextUrl)
-      .then(({data}: {data: ResponseType}) => {
-        setState(prevState => {
-          return {
-            ...prevState,
-            response: {
-              ...data,
-              results: [...prevState.response.results, ...data.results],
-            },
-          };
-        });
-      })
-      .catch(err => {
-        setState(prevState => ({...prevState, error: err}));
-      })
-      .finally(() => {
-        setState(prevState => ({...prevState, isNextLoading: false}));
-      });
-  }, []);
+  }, [url, setPokemonList]);
 
   return {
     isLoading: state.isLoading,
-    isNextLoading: state.isNextLoading,
-    response: state.response,
+    response: pokemonList,
     error: state.error,
-    loadMore,
   };
 };
 

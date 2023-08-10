@@ -8,14 +8,15 @@ import {
 } from 'react-native';
 import useFetchData, {ResultItem} from '../hooks/UseFetchData';
 import PokemonCardComponent from '../components/PokemonCardComponent';
+import useLoadMoreData from '../hooks/UseLoadMoreData';
 
 type ItemType = {
   item: ResultItem;
 };
 
 export default function PokemonListScreen(): JSX.Element {
-  const {isLoading, response, error, loadMore, isNextLoading} =
-    useFetchData('/pokemon?limit=8');
+  const {isLoading, response, error} = useFetchData('/pokemon?limit=8');
+  const {loadMore, isNextLoading} = useLoadMoreData();
 
   const onPressItem = useCallback(() => {}, []);
 
