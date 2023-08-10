@@ -1,13 +1,12 @@
 import React from 'react';
 import {
   StyleSheet,
-  Image,
   Text,
   ViewStyle,
   TouchableOpacity,
-  ImageStyle,
   TextStyle,
 } from 'react-native';
+import Avatar from '../base/Avatar';
 
 type Props = {
   data: {
@@ -17,7 +16,7 @@ type Props = {
   onPress: () => void;
 };
 
-export default function PokemonCardComponent(props: Props) {
+export default function PokemonCardComponent(props: Props): JSX.Element {
   const {data, onPress} = props;
 
   return (
@@ -25,10 +24,7 @@ export default function PokemonCardComponent(props: Props) {
       style={styles.container}
       activeOpacity={0.8}
       onPress={onPress}>
-      <Image
-        source={require('../assets/images/pokeball.png')}
-        style={styles.pokeball}
-      />
+      <Avatar />
       <Text style={styles.itemNameText}>{data.name}</Text>
     </TouchableOpacity>
   );
@@ -36,7 +32,6 @@ export default function PokemonCardComponent(props: Props) {
 
 type StyleType = {
   container: ViewStyle;
-  pokeball: ImageStyle;
   itemNameText: TextStyle;
 };
 
@@ -57,14 +52,10 @@ const styles = StyleSheet.create<StyleType>({
     shadowOpacity: 0.17,
     shadowRadius: 2.54,
   },
-  pokeball: {
-    height: 36,
-    width: 36,
-  },
   itemNameText: {
     marginLeft: 8,
     fontSize: 14,
     color: 'black',
-    fontWeight: '400',
+    fontWeight: '500',
   },
 });
