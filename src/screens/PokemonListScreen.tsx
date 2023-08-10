@@ -5,19 +5,30 @@ import {
   Text,
   FlatList,
   ActivityIndicator,
+  TouchableOpacity,
+  ViewStyle,
+  TextStyle,
 } from 'react-native';
-import useFetchData, {ResultItem} from '../hooks/UseFetchData';
-import PokemonCardComponent from '../components/PokemonCardComponent';
-import Input from '../base/Input';
-import useLoadMoreData from '../hooks/UseLoadMoreData';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-type ItemType = {
+import PokemonCardComponent from '../components/PokemonCardComponent';
+import useFetchData, {ResultItem} from '../hooks/UseFetchData';
+import useLoadMoreData from '../hooks/UseLoadMoreData';
+import {RootStackParamList} from '../navigation/RootNavigator';
+
+export type ItemType = {
   item: ResultItem;
 };
 
-export default function PokemonListScreen(): JSX.Element {
+type Props = NativeStackScreenProps<RootStackParamList, 'PokemonListScreen'>;
+
+export default function PokemonListScreen({navigation}: Props): JSX.Element {
   const {isLoading, response, error} = useFetchData('/pokemon?limit=8');
   const {loadMore, isNextLoading} = useLoadMoreData();
+
+  const onPressSearch = useCallback(() => {
+    navigation.navigate('PokemonSearchScreen');
+  }, [navigation]);
 
   const onPressItem = useCallback(() => {}, []);
 
@@ -28,10 +39,15 @@ export default function PokemonListScreen(): JSX.Element {
   const renderHeader = useCallback(() => {
     return (
       <View style={styles.headerContainer}>
-        <Input placeholder="Search Pokemon.." />
+        <TouchableOpacity
+          style={styles.searchButton}
+          activeOpacity={0.8}
+          onPress={onPressSearch}>
+          <Text style={styles.searchText}>Search Pokemon...</Text>
+        </TouchableOpacity>
       </View>
     );
-  }, []);
+  }, [onPressSearch]);
 
   const renderFooter = useCallback(() => {
     if (isNextLoading) {
@@ -85,7 +101,18 @@ export default function PokemonListScreen(): JSX.Element {
   );
 }
 
-const styles = StyleSheet.create({
+type StyleType = {
+  container: ViewStyle;
+  columnWrapper: ViewStyle;
+  loadingContainer: ViewStyle;
+  errorText: TextStyle;
+  footerContainer: ViewStyle;
+  headerContainer: ViewStyle;
+  searchText: TextStyle;
+  searchButton: ViewStyle;
+};
+
+const styles = StyleSheet.create<StyleType>({
   container: {
     flexGrow: 1,
     backgroundColor: 'white',
@@ -116,5 +143,16 @@ const styles = StyleSheet.create({
   headerContainer: {
     paddingHorizontal: 16,
     paddingTop: 8,
+    backgroundColor: 'white',
+  },
+  searchText: {
+    fontSize: 12,
+    color: 'grey',
+  },
+  searchButton: {
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'grey',
+    borderRadius: 4,
   },
 });
