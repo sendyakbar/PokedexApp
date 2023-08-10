@@ -5,10 +5,9 @@ import {
   Text,
   FlatList,
   ActivityIndicator,
-  Image,
-  TouchableOpacity,
 } from 'react-native';
 import useFetchData, {ResultItem} from '../hooks/UseFetchData';
+import PokemonCardComponent from '../components/PokemonCardComponent';
 
 type ItemType = {
   item: ResultItem;
@@ -38,18 +37,7 @@ export default function PokemonListScreen(): JSX.Element {
 
   const renderItem = useCallback(
     ({item}: ItemType) => {
-      return (
-        <TouchableOpacity
-          style={styles.itemContainer}
-          activeOpacity={0.8}
-          onPress={onPressItem}>
-          <Image
-            source={require('../assets/images/pokeball.png')}
-            style={styles.pokeball}
-          />
-          <Text style={styles.itemNameText}>{item.name}</Text>
-        </TouchableOpacity>
-      );
+      return <PokemonCardComponent data={item} onPress={onPressItem} />;
     },
     [onPressItem],
   );
@@ -92,22 +80,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingVertical: 16,
   },
-  itemContainer: {
-    width: '49%',
-    backgroundColor: 'white',
-    borderRadius: 4,
-    padding: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    elevation: 3,
-    shadowColor: '#000000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.17,
-    shadowRadius: 2.54,
-  },
   columnWrapper: {
     justifyContent: 'space-between',
     paddingHorizontal: 16,
@@ -118,16 +90,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'white',
-  },
-  pokeball: {
-    height: 36,
-    width: 36,
-  },
-  itemNameText: {
-    marginLeft: 8,
-    fontSize: 14,
-    color: 'black',
-    fontWeight: '400',
   },
   errorText: {
     color: 'grey',
