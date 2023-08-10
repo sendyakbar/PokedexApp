@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import useFetchData, {ResultItem} from '../hooks/UseFetchData';
 import PokemonCardComponent from '../components/PokemonCardComponent';
+import Input from '../base/Input';
 import useLoadMoreData from '../hooks/UseLoadMoreData';
 
 type ItemType = {
@@ -23,6 +24,14 @@ export default function PokemonListScreen(): JSX.Element {
   const onEndReached = useCallback(() => {
     loadMore(response.next || '');
   }, [loadMore, response.next]);
+
+  const renderHeader = useCallback(() => {
+    return (
+      <View style={styles.headerContainer}>
+        <Input placeholder="Search Pokemon.." />
+      </View>
+    );
+  }, []);
 
   const renderFooter = useCallback(() => {
     if (isNextLoading) {
@@ -71,6 +80,7 @@ export default function PokemonListScreen(): JSX.Element {
       onEndReached={onEndReached}
       onEndReachedThreshold={0.3}
       ListFooterComponent={renderFooter}
+      ListHeaderComponent={renderHeader}
     />
   );
 }
@@ -79,12 +89,12 @@ const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     backgroundColor: 'white',
-    paddingVertical: 16,
+    paddingBottom: 16,
   },
   columnWrapper: {
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingBottom: 8,
+    paddingTop: 8,
   },
   loadingContainer: {
     flex: 1,
@@ -102,5 +112,9 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 20,
+  },
+  headerContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 8,
   },
 });
