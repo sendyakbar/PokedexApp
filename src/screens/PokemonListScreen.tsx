@@ -15,9 +15,26 @@ type ItemType = {
 };
 
 export default function PokemonListScreen(): JSX.Element {
-  const {isLoading, response, error} = useFetchData('/pokemon?limit=8');
+  const {isLoading, response, error, loadMore, isNextLoading} =
+    useFetchData('/pokemon?limit=8');
 
   const onPressItem = useCallback(() => {}, []);
+
+  const onEndReached = useCallback(() => {
+    loadMore(response.next || '');
+  }, [loadMore, response.next]);
+
+  const renderFooter = useCallback(() => {
+    if (isNextLoading) {
+      return (
+        <View style={styles.footerContainer}>
+          <ActivityIndicator size="large" color="black" />
+          <Text style={styles.errorText}>Loading...</Text>
+        </View>
+      );
+    }
+    return null;
+  }, [isNextLoading]);
 
   const renderItem = useCallback(
     ({item}: ItemType) => {
@@ -41,6 +58,7 @@ export default function PokemonListScreen(): JSX.Element {
     return (
       <View style={styles.loadingContainer}>
         <ActivityIndicator size="large" color="black" />
+        <Text style={styles.errorText}>Loading...</Text>
       </View>
     );
   }
@@ -61,6 +79,9 @@ export default function PokemonListScreen(): JSX.Element {
       contentContainerStyle={styles.container}
       numColumns={2}
       columnWrapperStyle={styles.columnWrapper}
+      onEndReached={onEndReached}
+      onEndReachedThreshold={0.3}
+      ListFooterComponent={renderFooter}
     />
   );
 }
@@ -96,6 +117,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
   pokeball: {
     height: 36,
@@ -111,5 +133,11 @@ const styles = StyleSheet.create({
     color: 'grey',
     fontSize: 12,
     fontStyle: 'italic',
+    marginTop: 4,
+  },
+  footerContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingVertical: 20,
   },
 });
