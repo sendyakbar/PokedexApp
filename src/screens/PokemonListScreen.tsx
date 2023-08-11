@@ -1,13 +1,5 @@
 import React, {useCallback} from 'react';
-import {
-  StyleSheet,
-  View,
-  Text,
-  FlatList,
-  ActivityIndicator,
-  ViewStyle,
-  TextStyle,
-} from 'react-native';
+import {StyleSheet, View, FlatList, ViewStyle} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import PokemonCardComponent from '../components/PokemonCardComponent';
@@ -61,8 +53,7 @@ export default function PokemonListScreen({navigation}: Props): JSX.Element {
     if (isNextLoading) {
       return (
         <View style={styles.footerContainer}>
-          <ActivityIndicator size="large" color="black" />
-          <Text style={styles.errorText}>Loading...</Text>
+          <Loading />
         </View>
       );
     }
@@ -103,8 +94,6 @@ export default function PokemonListScreen({navigation}: Props): JSX.Element {
 type StyleType = {
   container: ViewStyle;
   columnWrapper: ViewStyle;
-  loadingContainer: ViewStyle;
-  errorText: TextStyle;
   footerContainer: ViewStyle;
   headerContainer: ViewStyle;
 };
@@ -120,22 +109,11 @@ const styles = StyleSheet.create<StyleType>({
     paddingHorizontal: 16,
     paddingTop: 8,
   },
-  loadingContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  errorText: {
-    color: 'grey',
-    fontSize: 12,
-    fontStyle: 'italic',
-    marginTop: 4,
-  },
   footerContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 20,
+    height: 120,
   },
   headerContainer: {
     paddingHorizontal: 16,
