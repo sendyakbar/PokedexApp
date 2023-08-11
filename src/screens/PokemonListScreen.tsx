@@ -20,7 +20,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'PokemonListScreen'>;
 
 export default function PokemonListScreen({navigation}: Props): JSX.Element {
   const {isLoading, response, error} =
-    useSetGlobalPokemonList('/pokemon?limit=8');
+    useSetGlobalPokemonList('/pokemon?limit=24');
   const {loadMore, isNextLoading} = useLoadMoreData();
 
   const onPressSearch = useCallback(() => {
