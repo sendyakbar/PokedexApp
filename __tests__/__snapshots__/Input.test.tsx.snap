@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+<View
+  style={
+    {
+      "borderColor": "grey",
+      "borderRadius": 4,
+      "borderWidth": 1,
+      "paddingHorizontal": 8,
+      "paddingVertical": 4,
+    }
+  }
+>
+  <TextInput
+    autoCapitalize="none"
+    onChangeText={[Function]}
+    placeholder="Test"
+    style={
+      {
+        "color": "grey",
+        "fontSize": 12,
+        "padding": 0,
+      }
+    }
+  />
+</View>
+`;

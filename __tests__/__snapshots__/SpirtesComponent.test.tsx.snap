@@ -1,0 +1,53 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders correctly 1`] = `
+[
+  <Text
+    style={
+      {
+        "color": "black",
+        "fontSize": 14,
+        "fontWeight": "700",
+      }
+    }
+  >
+    Test
+    :
+  </Text>,
+  <View
+    style={
+      {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+      }
+    }
+  >
+    <Image
+      source={
+        {
+          "uri": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/2.png",
+        }
+      }
+      style={
+        {
+          "height": 179.5,
+          "width": 179.5,
+        }
+      }
+    />
+    <Image
+      source={
+        {
+          "uri": "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/back/shiny/2.png",
+        }
+      }
+      style={
+        {
+          "height": 179.5,
+          "width": 179.5,
+        }
+      }
+    />
+  </View>,
+]
+`;
