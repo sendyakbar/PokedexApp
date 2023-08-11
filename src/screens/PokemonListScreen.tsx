@@ -17,6 +17,8 @@ import useSetGlobalPokemonList, {
 } from '../hooks/UseSetGlobalPokemonList';
 import useLoadMoreData from '../hooks/UseLoadMoreData';
 import {RootStackParamList} from '../navigation/RootNavigator';
+import Loading from '../base/Loading';
+import Error from '../base/Error';
 
 export type ItemType = {
   item: ResultItem;
@@ -80,20 +82,11 @@ export default function PokemonListScreen({navigation}: Props): JSX.Element {
   );
 
   if (isLoading) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="black" />
-        <Text style={styles.errorText}>Loading...</Text>
-      </View>
-    );
+    return <Loading />;
   }
 
   if (error) {
-    return (
-      <View style={styles.loadingContainer}>
-        <Text style={styles.errorText}>Oops.. error</Text>
-      </View>
-    );
+    return <Error />;
   }
 
   return (
