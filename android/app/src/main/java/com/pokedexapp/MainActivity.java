@@ -7,6 +7,7 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
 // react-navigation
 import android.os.Bundle;
+import com.zoontek.rnbootsplash.RNBootSplash;
 
 public class MainActivity extends ReactActivity {
 
@@ -36,6 +37,7 @@ public class MainActivity extends ReactActivity {
   // react-navigation
   @Override
   protected void onCreate(Bundle savedInstanceState) {
+    RNBootSplash.init(this);
     super.onCreate(null);
   }
 }
