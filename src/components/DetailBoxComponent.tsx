@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 
 import InfoRow from '../base/InfoRow';
@@ -19,10 +19,10 @@ export default function DetailBoxComponent(props: Props): JSX.Element {
   return (
     <View style={styles.container}>
       {data.map((d: ItemDataType, i: number) => (
-        <>
-          <InfoRow label={d.label} value={d.value} key={i} />
+        <Fragment key={i}>
+          <InfoRow label={d.label} value={d.value} />
           {i !== data.length - 1 ? <Separator /> : null}
-        </>
+        </Fragment>
       ))}
     </View>
   );
