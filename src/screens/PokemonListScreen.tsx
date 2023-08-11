@@ -5,7 +5,6 @@ import {
   Text,
   FlatList,
   ActivityIndicator,
-  TouchableOpacity,
   ViewStyle,
   TextStyle,
 } from 'react-native';
@@ -19,6 +18,7 @@ import useLoadMoreData from '../hooks/UseLoadMoreData';
 import {RootStackParamList} from '../navigation/RootNavigator';
 import Loading from '../base/Loading';
 import Error from '../base/Error';
+import Button from '../base/Button';
 
 export type ItemType = {
   item: ResultItem;
@@ -52,12 +52,7 @@ export default function PokemonListScreen({navigation}: Props): JSX.Element {
   const renderHeader = useCallback(() => {
     return (
       <View style={styles.headerContainer}>
-        <TouchableOpacity
-          style={styles.searchButton}
-          activeOpacity={0.8}
-          onPress={onPressSearch}>
-          <Text style={styles.searchText}>Search Pokemon...</Text>
-        </TouchableOpacity>
+        <Button title="Search Pokemon..." onPress={onPressSearch} />
       </View>
     );
   }, [onPressSearch]);
@@ -112,8 +107,6 @@ type StyleType = {
   errorText: TextStyle;
   footerContainer: ViewStyle;
   headerContainer: ViewStyle;
-  searchText: TextStyle;
-  searchButton: ViewStyle;
 };
 
 const styles = StyleSheet.create<StyleType>({
@@ -148,15 +141,5 @@ const styles = StyleSheet.create<StyleType>({
     paddingHorizontal: 16,
     paddingTop: 8,
     backgroundColor: 'white',
-  },
-  searchText: {
-    fontSize: 12,
-    color: 'grey',
-  },
-  searchButton: {
-    padding: 10,
-    borderWidth: 1,
-    borderColor: 'grey',
-    borderRadius: 4,
   },
 });
