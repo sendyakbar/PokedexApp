@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import {Image, ImageStyle, StyleSheet} from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import RNBootSplash from 'react-native-bootsplash';
 
@@ -28,7 +29,9 @@ export default function RootNavigator() {
         name="PokemonListScreen"
         component={PokemonListScreen}
         options={{
-          title: 'Pokemon',
+          // title: 'Pokemon',
+          headerTitle: HeaderLogo,
+          headerTitleAlign: 'center',
         }}
       />
       <Stack.Screen
@@ -46,3 +49,24 @@ export default function RootNavigator() {
     </Stack.Navigator>
   );
 }
+
+function HeaderLogo(): JSX.Element {
+  return (
+    <Image
+      source={require('../assets/images/pokemon_splash_icon.png')}
+      style={styles.logo}
+      resizeMode="contain"
+    />
+  );
+}
+
+type StyleType = {
+  logo: ImageStyle;
+};
+
+const styles = StyleSheet.create<StyleType>({
+  logo: {
+    height: 60,
+    width: 240,
+  },
+});
