@@ -1,6 +1,6 @@
 import {useCallback} from 'react';
 
-type ItemTypesType = {
+export type ItemTypesType = {
   type: {
     name: string;
     url: string;
