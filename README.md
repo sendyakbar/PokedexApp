@@ -1,5 +1,11 @@
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
+# Import Optimization
+In this app I use React.lazy function to make several component load lazily in order to initial load faster.
+
+# Minimizing Re-render & Render Time
+in this app I use React.memo function to memoizing several component in order to avoid re-rendering if there is no changes on its props. React useCallback hooks also applied to all functions to memoizing those function to avoid function recreation on each re-render process.
+
 # Getting Started
 
 >**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
