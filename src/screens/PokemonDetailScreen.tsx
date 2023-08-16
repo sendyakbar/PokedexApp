@@ -8,7 +8,6 @@ import React, {
 import {StyleSheet, ViewStyle, ScrollView} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-const Loading = lazy(() => import('../base/Loading'));
 const DetailBoxComponent = lazy(
   () => import('../components/DetailBoxComponent'),
 );
@@ -19,6 +18,7 @@ import useDataFetcher from '../hooks/UseDataFetcher';
 import useHelpers from '../hooks/UseHelpers';
 import useFetchEvoChain from '../hooks/UseFetchEvoChain';
 import Placeholder from '../base/Placeholder';
+import Loading from '../base/Loading';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'PokemonDetailScreen'>;
 
