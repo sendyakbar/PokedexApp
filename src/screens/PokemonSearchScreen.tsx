@@ -1,20 +1,18 @@
-import React, {useCallback} from 'react';
-import {
-  StyleSheet,
-  FlatList,
-  View,
-  Text,
-  ViewStyle,
-  TextStyle,
-} from 'react-native';
+import React, {useCallback, lazy, Suspense} from 'react';
+import {StyleSheet, FlatList, View, ViewStyle} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
 import {ItemType} from './PokemonListScreen';
-import PokemonCardComponent from '../components/PokemonCardComponent';
+import {RootStackParamList} from '../navigation/RootNavigator';
 import useSearchPokemon from '../hooks/UseSearchPokemon';
 import {ResultItem} from '../hooks/UseSetGlobalPokemonList';
+
+const PokemonCardComponent = lazy(
+  () => import('../components/PokemonCardComponent'),
+);
 import Input from '../base/Input';
-import {RootStackParamList} from '../navigation/RootNavigator';
+import Empty from '../base/Empty';
+import Placeholder from '../base/Placeholder';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'PokemonSearchScreen'>;
 
@@ -40,17 +38,17 @@ export default function PokemonSearchScreen({navigation}: Props): JSX.Element {
 
   const renderItem = useCallback(
     ({item}: ItemType) => {
-      return <PokemonCardComponent data={item} onPress={onPressItem(item)} />;
+      return (
+        <Suspense fallback={<Placeholder height={55} width="49%" />}>
+          <PokemonCardComponent data={item} onPress={onPressItem(item)} />
+        </Suspense>
+      );
     },
     [onPressItem],
   );
 
   const renderEmpty = useCallback(() => {
-    return (
-      <View style={styles.emptyContainer}>
-        <Text style={styles.emptyText}>Not found...</Text>
-      </View>
-    );
+    return <Empty />;
   }, []);
 
   return (
@@ -75,8 +73,6 @@ type StyleType = {
   container: ViewStyle;
   columnWrapper: ViewStyle;
   headerContainer: ViewStyle;
-  emptyContainer: ViewStyle;
-  emptyText: TextStyle;
 };
 
 const styles = StyleSheet.create<StyleType>({
@@ -94,16 +90,5 @@ const styles = StyleSheet.create<StyleType>({
     paddingHorizontal: 16,
     paddingVertical: 8,
     backgroundColor: 'white',
-  },
-  emptyContainer: {
-    flex: 1,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  emptyText: {
-    fontSize: 12,
-    color: 'grey',
-    fontStyle: 'italic',
   },
 });
