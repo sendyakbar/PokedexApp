@@ -1,14 +1,24 @@
-import React, {useLayoutEffect, useEffect, useState} from 'react';
+import React, {
+  useLayoutEffect,
+  useEffect,
+  useState,
+  lazy,
+  Suspense,
+} from 'react';
 import {StyleSheet, ViewStyle, ScrollView} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
+const Loading = lazy(() => import('../base/Loading'));
+const DetailBoxComponent = lazy(
+  () => import('../components/DetailBoxComponent'),
+);
+const SpritesComponent = lazy(() => import('../components/SpritesComponent'));
+
 import {RootStackParamList} from '../navigation/RootNavigator';
-import Loading from '../base/Loading';
 import useDataFetcher from '../hooks/UseDataFetcher';
 import useHelpers from '../hooks/UseHelpers';
 import useFetchEvoChain from '../hooks/UseFetchEvoChain';
-import DetailBoxComponent from '../components/DetailBoxComponent';
-import SpritesComponent from '../components/SpritesComponent';
+import Placeholder from '../base/Placeholder';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'PokemonDetailScreen'>;
 
@@ -44,16 +54,20 @@ export default function PokemonDetailScreen({
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <SpritesComponent label="Sprites" pics={pics} />
-      <DetailBoxComponent
-        data={[
-          {label: 'Height', value: response.height},
-          {label: 'Weight', value: response.weight},
-          {label: 'Types', value: typesFormatter(response.types)},
-          {label: 'Evo Chain', value: formattedEvoChain},
-          {label: 'Moves', value: movesFormatter(response.moves)},
-        ]}
-      />
+      <Suspense fallback={<Placeholder height={120} width="100%" />}>
+        <SpritesComponent label="Sprites" pics={pics} />
+      </Suspense>
+      <Suspense fallback={<Placeholder height={180} width="100%" />}>
+        <DetailBoxComponent
+          data={[
+            {label: 'Height', value: response.height},
+            {label: 'Weight', value: response.weight},
+            {label: 'Types', value: typesFormatter(response.types)},
+            {label: 'Evo Chain', value: formattedEvoChain},
+            {label: 'Moves', value: movesFormatter(response.moves)},
+          ]}
+        />
+      </Suspense>
     </ScrollView>
   );
 }
