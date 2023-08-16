@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, memo} from 'react';
 import {StyleSheet, View, ViewStyle} from 'react-native';
 
 import InfoRow from '../base/InfoRow';
@@ -13,7 +13,7 @@ type Props = {
   data: ItemDataType[];
 };
 
-export default function DetailBoxComponent(props: Props): JSX.Element {
+const DetailBoxComponent = memo((props: Props): JSX.Element => {
   const {data} = props;
 
   return (
@@ -26,7 +26,7 @@ export default function DetailBoxComponent(props: Props): JSX.Element {
       ))}
     </View>
   );
-}
+});
 
 type StyleType = {
   container: ViewStyle;
@@ -39,3 +39,5 @@ const styles = StyleSheet.create<StyleType>({
     borderRadius: 4,
   },
 });
+
+export default DetailBoxComponent;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {
   StyleSheet,
   View,
@@ -17,7 +17,7 @@ type Props = {
   pics: string[];
 };
 
-export default function SpritesComponent(props: Props): JSX.Element {
+const SpritesComponent = memo((props: Props): JSX.Element => {
   const {label, pics} = props;
 
   return (
@@ -30,7 +30,7 @@ export default function SpritesComponent(props: Props): JSX.Element {
       </View>
     </>
   );
-}
+});
 
 type StyleType = {
   picsContainer: ViewStyle;
@@ -53,3 +53,5 @@ const styles = StyleSheet.create<StyleType>({
     fontWeight: '700',
   },
 });
+
+export default SpritesComponent;

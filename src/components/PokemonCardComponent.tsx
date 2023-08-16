@@ -1,4 +1,4 @@
-import React, {Suspense, lazy} from 'react';
+import React, {Suspense, lazy, memo} from 'react';
 import {
   StyleSheet,
   Text,
@@ -18,7 +18,7 @@ type Props = {
   onPress: () => void;
 };
 
-export default function PokemonCardComponent(props: Props): JSX.Element {
+const PokemonCardComponent = memo((props: Props): JSX.Element => {
   const {data, onPress} = props;
 
   return (
@@ -33,7 +33,7 @@ export default function PokemonCardComponent(props: Props): JSX.Element {
       <Text style={styles.itemNameText}>{data.name}</Text>
     </TouchableOpacity>
   );
-}
+});
 
 type StyleType = {
   container: ViewStyle;
@@ -64,3 +64,5 @@ const styles = StyleSheet.create<StyleType>({
     fontWeight: '500',
   },
 });
+
+export default PokemonCardComponent;
