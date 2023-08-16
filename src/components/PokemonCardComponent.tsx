@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Suspense, lazy} from 'react';
 import {
   StyleSheet,
   Text,
@@ -6,7 +6,9 @@ import {
   TouchableOpacity,
   TextStyle,
 } from 'react-native';
-import Avatar from '../base/Avatar';
+import Placeholder from '../base/Placeholder';
+
+const Avatar = lazy(() => import('../base/Avatar'));
 
 type Props = {
   data: {
@@ -24,7 +26,10 @@ export default function PokemonCardComponent(props: Props): JSX.Element {
       style={styles.container}
       activeOpacity={0.8}
       onPress={onPress}>
-      <Avatar />
+      <Suspense
+        fallback={<Placeholder height={36} width={36} borderRadius={100} />}>
+        <Avatar />
+      </Suspense>
       <Text style={styles.itemNameText}>{data.name}</Text>
     </TouchableOpacity>
   );
