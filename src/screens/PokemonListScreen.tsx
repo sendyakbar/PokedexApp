@@ -1,16 +1,21 @@
-import React, {useCallback} from 'react';
+import React, {Suspense, lazy, useCallback} from 'react';
 import {StyleSheet, View, FlatList, ViewStyle} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 
-import PokemonCardComponent from '../components/PokemonCardComponent';
 import useSetGlobalPokemonList, {
   ResultItem,
 } from '../hooks/UseSetGlobalPokemonList';
 import useLoadMoreData from '../hooks/UseLoadMoreData';
 import {RootStackParamList} from '../navigation/RootNavigator';
+
+const PokemonCardComponent = lazy(
+  () => import('../components/PokemonCardComponent'),
+);
+
 import Loading from '../base/Loading';
 import Error from '../base/Error';
 import Button from '../base/Button';
+import Placeholder from '../base/Placeholder';
 
 export type ItemType = {
   item: ResultItem;
@@ -20,7 +25,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'PokemonListScreen'>;
 
 export default function PokemonListScreen({navigation}: Props): JSX.Element {
   const {isLoading, response, error} =
-    useSetGlobalPokemonList('/pokemon?limit=24');
+    useSetGlobalPokemonList('/pokemon?limit=8');
   const {loadMore, isNextLoading} = useLoadMoreData();
 
   const onPressSearch = useCallback(() => {
@@ -62,7 +67,11 @@ export default function PokemonListScreen({navigation}: Props): JSX.Element {
 
   const renderItem = useCallback(
     ({item}: ItemType) => {
-      return <PokemonCardComponent data={item} onPress={onPressItem(item)} />;
+      return (
+        <Suspense fallback={<Placeholder height={55} width="49%" />}>
+          <PokemonCardComponent data={item} onPress={onPressItem(item)} />
+        </Suspense>
+      );
     },
     [onPressItem],
   );
@@ -84,7 +93,7 @@ export default function PokemonListScreen({navigation}: Props): JSX.Element {
       numColumns={2}
       columnWrapperStyle={styles.columnWrapper}
       onEndReached={onEndReached}
-      onEndReachedThreshold={0.3}
+      onEndReachedThreshold={0.5}
       ListFooterComponent={renderFooter}
       ListHeaderComponent={renderHeader}
     />
